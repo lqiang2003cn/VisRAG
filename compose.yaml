@@ -1,0 +1,14 @@
+# ^ fixes another pycharm bug
+services:
+  test:
+    image: ubuntu22_visrag:v0.0.1
+    # ^ or your own
+    command: -p 8888:8888 -v /home/ubuntu/PycharmProjects/VisRAG:/home/lq/mnt/ python3 -c "import torch as t; print(t.cuda.is_available())"
+    # ^ irrelevant, will be overwridden by pycharm, but usefull for testing
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
