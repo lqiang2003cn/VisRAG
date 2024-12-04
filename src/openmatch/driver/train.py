@@ -72,6 +72,12 @@ def main():
 
     set_seed(training_args.seed)
 
+    from huggingface_hub import snapshot_download
+    download_dir = '/root/VisRAG/openbmb/MiniCPM-V-2'
+    if not os.path.exists(download_dir):
+        snapshot_download(repo_id="openbmb/MiniCPM-V-2", local_dir='/root/VisRAG/openbmb/MiniCPM-V-2')
+
+    model_args.model_name_or_path = '/root/VisRAG/openbmb/MiniCPM-V-2'
     config_json = json.load(open(os.path.join(model_args.model_name_or_path, 'config.json')))
 
     assert "_name_or_path" in config_json or "model_name_or_path" in config_json, "building model will need to determine the modeling file, please make sure _name_or_path or model_name_or_path is in the config.json"
